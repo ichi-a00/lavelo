@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
@@ -49,12 +50,19 @@ class Post extends Model
     }
 
     // 公開記事一覧取得
-    public function scopePublicList(Builder $query)
+    public function scopePublicList(Builder $query, string $tagSlug = null)
     {
+        if ($tagSlug) {
+            $query->whereHas('tags', function($query) use ($tagSlug) {
+                $query->where('slug', $tagSlug);
+            });
+        }
         return $query
             ->public()
             ->latest('published_at')
             ->paginate(10);
+
+
     }
 
     // 公開記事をIDで取得
@@ -77,6 +85,10 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 
     protected static function boot()
     {
@@ -87,4 +99,6 @@ class Post extends Model
             $post->user_id = \Auth::id();
         });
     }
+
+
 }

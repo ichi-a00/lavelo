@@ -13,6 +13,7 @@ $title = '投稿一覧';
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">タイトル</th>
+                    <th scope="col">タグ</th>
                     <th scope="col">編集者</th>
                     <th scope="col" style="width: 4.3em">状態</th>
                     <th scope="col" style="width: 9em">公開日</th>
@@ -24,6 +25,12 @@ $title = '投稿一覧';
                 <tr>
                     <td>{{ $post->id }}</td>
                     <td>{{ $post->title }}</td>
+                    <td>
+                        @foreach($post->tags as $tag)
+                            @if (!$loop->first)、@endif
+                            {{ $tag->name }}
+                        @endforeach
+                    </td>
                     <td>{{ $post->user->name }}</td>
                     <td>{{ $post->is_public }}</td>
                     <td>{{ $post->published_format }}</td>

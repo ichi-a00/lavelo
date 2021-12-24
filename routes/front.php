@@ -12,5 +12,6 @@ use Illuminate\Support\Facades\Redirect;
 #一旦7までの書き方でやります。
 Route::get('/', "PostController@index")->name('home');
 Route::resource('posts', PostController::class)->only(['index','show']);
+Route::get('posts/tag/{tagSlug}', 'PostController@index')->where('tagSlug', '[a-z]+')->name('posts.index.tag');
 
 ?>
