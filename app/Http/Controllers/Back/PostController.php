@@ -16,8 +16,12 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest('id')->paginate(20);
+        //$posts = Post::latest('id')->paginate(20);
+        //N+1対策 eager loading
+        $posts = Post::with('user')->latest('id')->paginate(20);
+
         return view('back.posts.index', compact('posts'));
+
     }
 
     /**
