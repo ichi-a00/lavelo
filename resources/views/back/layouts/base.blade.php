@@ -28,6 +28,11 @@
                         {{ Form::open(['route' => 'logout', 'id' => 'logout-form']) }}
                         {{ Form::close() }}
                     </li>
+                    @can('admin')
+                    <li class="nav-item{{ Request::is('admin/users', 'admin/users/*') ? ' active' : '' }}">
+                        <a class="nav-link" href="{{ route('back.users.index') }}">ユーザー</a>
+                    </li>
+                    @endcan
                 </ul>
             </div>
         </div>

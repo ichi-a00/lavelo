@@ -18,7 +18,7 @@ class PostController extends Controller
     public function index(string $tagSlug = null)
     {
         // 公開・新しい順に表示
-        $posts = Post::publicList($tagSlug);
+        $posts = Post::with('tags')->publicList($tagSlug);
         $tags = Tag::all();
 
         return view('front.posts.index', compact('posts', 'tags'));
